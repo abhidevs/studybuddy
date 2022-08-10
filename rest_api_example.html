@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing StudyBuddy backend API</title>
+  </head>
+  <body>
+    <h1>Study Rooms</h1>
+    <div id="rooms-container"></div>
+  </body>
+
+  <script>
+    const BACKEND_API = "http://127.0.0.1:8000/api";
+    const roomsContainer = document.getElementById("rooms-container");
+
+    let renderRoom = (room) => {
+      let row = `
+            <div>
+                <h3>${room.name}</h3>
+            </div>
+        `;
+      roomsContainer.innerHTML += row;
+    };
+
+    let getRooms = async () => {
+      let res = await fetch(`${BACKEND_API}/rooms`);
+      let rooms = await res.json();
+      console.log("Rooms", rooms);
+
+      for (let i = 0; i < rooms.length; i++) {
+        renderRoom(rooms[i]);
+      }
+    };
+
+    getRooms();
+  </script>
+</html>
